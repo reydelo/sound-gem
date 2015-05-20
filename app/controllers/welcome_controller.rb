@@ -5,7 +5,7 @@ class WelcomeController < ApplicationController
   def show
     @favorites = current_user.soundcloud_client.get("/me/favorites")
     @friends = current_user.soundcloud_client.get("/me/followings")
-    @friends["collection"].each do |x|
+    @friends.each do |x|
       @friend_favs = current_user.soundcloud_client.get("/users/#{x["id"]}/favorites")
     end
     @me = current_user.soundcloud_client.get("/me")

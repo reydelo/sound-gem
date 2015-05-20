@@ -11,10 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150519195849) do
+ActiveRecord::Schema.define(version: 20150520161043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "soundcloud_track_id"
+    t.integer "soundcloud_user_id"
+    t.string  "soundcloud_title"
+    t.string  "soundcloud_artist_username"
+    t.integer "soundcloud_artist_id"
+  end
+
+  create_table "friends", force: :cascade do |t|
+    t.integer "soundcloud_user_id"
+    t.string  "soundcloud_username"
+    t.integer "user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.integer  "soundcloud_user_id"

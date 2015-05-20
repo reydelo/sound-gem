@@ -34,14 +34,15 @@
     <% end %>
   </ul>
 </div> -->
-
 <b>Your Friends' Likes</b>
 <div class="friends">
-    <% @friend_favs.each do |track| %>
+    <% @friends.each do |x| %>
+    <% current_user.soundcloud_client.get("/users/#{x.id}/favorites").each do |track| %>
     <iframe id="soundcloud_widget"
-          src="http://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/<%=track.id%>&show_artwork=true&liking=true&sharing=true&auto_play=false"
+          src="http://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/<%=track.id%>&show_artwork=true&liking=true&sharing=true&auto_play=true"
           width="900"
           height="150"
           frameborder="no"></iframe>
+    <% end %>
     <% end %>
 </div>
