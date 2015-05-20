@@ -8,7 +8,7 @@ class SoundcloudController < ApplicationController
       soundcloud_client.exchange_token(:code => params[:code])
       me = soundcloud_client.get("/me")
 
-      login_as User.find_or_create_by_soundcloud_user_id({
+      login_as User.find_or_create_by({
         :soundcloud_user_id  => me.id,
         :soundcloud_username => me.username
       })
@@ -26,7 +26,7 @@ class SoundcloudController < ApplicationController
     login_as nil
     redirect_to root_path
   end
-  
+
 private
 
   def soundcloud_client
