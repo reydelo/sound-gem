@@ -1,13 +1,19 @@
-<div class="connect-with-soundcloud <%= "connected" if logged_in? %>">
-  <%= link_to "Connect With SoundCloud",    soundcloud_connect_path, :class => "connect" %>
-  <%= link_to "Disconnect From SoundCloud", soundcloud_disconnect_path, :class => "disconnect" %>
-  <span class="current-user">
-    You are logged in as:
-    <span class="username"><%= current_user.soundcloud_username if logged_in? %></span>
-  </span>
-</div>
-
-
-<div class="visible-when-logged-in" <%= "hidden" unless logged_in? %>"">
-  <%= link_to "Check out your profile infos", you_path %>
-</div>
+<nav class="navbar navbar-default">
+  <div class="navbar-header">
+    <a class="navbar-brand">SoundGems</a>
+  </div>
+  <ul class="nav navbar-nav navbar-right">
+    <% if current_user %>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <%= current_user.soundcloud_username %> <span class="caret"></span></a>
+      <ul class="dropdown-menu" role="menu">
+        <li> <%= link_to "Find Some Gems", you_path %> </li>
+        <li class="divider"></li>
+        <li> <%= link_to "Logout", soundcloud_disconnect_path, :class => "disconnect" %> </li>
+      </ul>
+    </li>
+    <% else %>
+    <li> <%= link_to "Connect With SoundCloud", soundcloud_connect_path, :class => "connect" %> </li>
+    <% end %>
+  </ul>
+</nav>
