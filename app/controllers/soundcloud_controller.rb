@@ -1,4 +1,5 @@
 class SoundcloudController < ApplicationController
+
   def connect
     redirect_to soundcloud_client.authorize_url(:display => "popup")
   end

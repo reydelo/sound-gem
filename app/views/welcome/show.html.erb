@@ -1,6 +1,5 @@
 <div class="infos">
   <div class="details">
-    <b>Your SoundCloud User Infos:</b>
     <ul>
       <li>Username: <%= @me.username %></li>
       <li>Fullname: <%= @me.full_name %></li>
@@ -11,35 +10,13 @@
 
 </div>
 
-<div class="description">
-  <% form_tag you_update_path, :method => "post" do %>
-    <b>Description:</b>
-    <textarea name="description"><%= @me.description %></textarea>
-    <input type="submit" value="update" />
-    <span class="warning">this will change your SoundCloud profile description!</span>
-  <% end %>
-</div>
-
-<!-- <div class="tracks">
-  <b>Your favorite tracks</b>
-  <ul>
-    <% @favorites.each do |track| %>
-    <li>
-    <iframe id="soundcloud_widget"
-          src= "http://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/<%=track.id%>&show_artwork=true&liking=true&sharing=true&auto_play=false" %>
-          width="900"
-          height="150"
-          frameborder="yes"></iframe>
-        </li>
-    <% end %>
-  </ul>
-</div> -->
 <b>Your Friends' Likes</b>
+
 <div class="friends">
     <% @friends.each do |x| %>
-    <% current_user.soundcloud_client.get("/users/#{x.id}/favorites").each do |track| %>
+    <% current_user.soundcloud_client.get("/users/#{x.id}/favorites", :limit => 1).each do |track| %>
     <iframe id="soundcloud_widget"
-          src="http://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/<%=track.id%>&show_artwork=true&liking=true&sharing=true&auto_play=true"
+          src="http://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/<%=track.id%>&show_artwork=true&liking=true&sharing=true&auto_play=false"
           width="900"
           height="150"
           frameborder="no"></iframe>

@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   get '/you' => 'welcome#show', :as => :you
-  get '/you/update' => 'welcome#update', :as => :you_update
 
   get '/soundcloud/connect' => 'soundcloud#connect', :as => :soundcloud_connect
   get '/soundcloud/connected' => 'soundcloud#connected', :as => :soundcloud_connected

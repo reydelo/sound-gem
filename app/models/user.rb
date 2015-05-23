@@ -1,18 +1,13 @@
 class User < ActiveRecord::Base
 
-  SOUNDCLOUD_CLIENT_ID     = "5113f95a4017797772e1adc3eebdebb9"
-  SOUNDCLOUD_CLIENT_SECRET = "0ada4752f4b6fbf8fcbca8babb611167"
-
-
   def self.soundcloud_client(options={})
     options = {
-      :client_id     => SOUNDCLOUD_CLIENT_ID,
-      :client_secret => SOUNDCLOUD_CLIENT_SECRET,
+      :client_id     => ENV['SOUNDCLOUD_CLIENT_ID'],
+      :client_secret => ENV['SOUNDCLOUD_CLIENT_SECRET'],
     }.merge(options)
 
     Soundcloud.new(options)
   end
-
 
   def soundcloud_client(options={})
     options= {
