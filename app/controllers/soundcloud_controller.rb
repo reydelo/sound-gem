@@ -20,7 +20,7 @@ class SoundcloudController < ApplicationController
         :soundcloud_expires_at    => soundcloud_client.expires_at,
       })
     end
-    render :layout => false
+    redirect_to you_path
   end
 
   def disconnect
