@@ -13,7 +13,13 @@ class SoundcloudController < ApplicationController
         :soundcloud_user_id  => me.id,
         :soundcloud_username => me.username
       })
-
+      peeps = current_user.soundcloud_client.get("/me/followings")
+      peeps.each do |peep|
+        current_user.friends.create(
+          :soundcloud_user_id => peep.id,
+          :soundcloud_username => peep.username,
+        )
+      end
       current_user.update_attributes!({
         :soundcloud_access_token  => soundcloud_client.access_token,
         :soundcloud_refresh_token => soundcloud_client.refresh_token,
