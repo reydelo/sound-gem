@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
-  has_many :friendships
+  has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships
+  has_many :favorites, dependent: :destroy
+  has_many :tracks, through: :favorites
 
   def self.soundcloud_client(options={})
     options = {

@@ -5,7 +5,9 @@ class ApplicationController < ActionController::Base
   helper_method :current_user, :login_as
 
   def current_user
-    @current_user = User.find_by_id(session[:current_user_id])
+    if session[:current_user_id]
+      @current_user ||= User.find_by_id(session[:current_user_id])
+    end
   end
 
   def login_as(user)

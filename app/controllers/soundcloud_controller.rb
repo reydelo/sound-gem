@@ -8,23 +8,34 @@ class SoundcloudController < ApplicationController
     if params[:error].nil?
       soundcloud_client.exchange_token(:code => params[:code])
       me = soundcloud_client.get("/me")
-
       login_as User.find_or_create_by({
         :soundcloud_user_id  => me.id,
         :soundcloud_username => me.username
       })
-      peeps = current_user.soundcloud_client.get("/me/followings")
-      peeps.each do |peep|
-        current_user.friends.create(
-          :soundcloud_user_id => peep.id,
-          :soundcloud_username => peep.username,
-        )
-      end
       current_user.update_attributes!({
         :soundcloud_access_token  => soundcloud_client.access_token,
         :soundcloud_refresh_token => soundcloud_client.refresh_token,
         :soundcloud_expires_at    => soundcloud_client.expires_at,
       })
+      peeps = current_user.soundcloud_client.get("/me/followings")
+      peeps.each do |peep|
+        user = current_user.friends.find_or_create_by(
+          :soundcloud_user_id => peep.id,
+          :soundcloud_username => peep.username,
+        )
+        peep_tracks = current_user.soundcloud_client.get("/users/#{peep.id}/favorites")
+        peep_tracks.each do |peep_track|
+          user.tracks.find_or_create_by(
+          :soundcloud_track_id => peep_track.id
+          )
+        end
+      end
+      tracks = current_user.soundcloud_client.get("/me/favorites")
+      tracks.each do |track|
+        current_user.tracks.find_or_create_by(
+          :soundcloud_track_id => track.id
+        )
+      end
     end
     redirect_to you_path
   end
