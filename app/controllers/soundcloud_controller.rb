@@ -19,22 +19,21 @@ class SoundcloudController < ApplicationController
       })
       peeps = current_user.soundcloud_client.get("/me/followings")
       peeps.each do |peep|
-        user = current_user.friends.find_or_create_by(
-          :soundcloud_user_id => peep.id,
-          :soundcloud_username => peep.username,
+        user = User.find_or_create_by(
+        :soundcloud_user_id => peep.id,
+        :soundcloud_username => peep.username
         )
+        current_user.friendships.find_or_create_by(:friend_id => user.id)
         peep_tracks = current_user.soundcloud_client.get("/users/#{peep.id}/favorites")
         peep_tracks.each do |peep_track|
-          user.tracks.find_or_create_by(
-          :soundcloud_track_id => peep_track.id
-          )
+          track = Track.find_or_create_by(:soundcloud_track_id => peep_track.id)
+          user.favorites.find_or_create_by(:track_id => track.id)
         end
       end
       tracks = current_user.soundcloud_client.get("/me/favorites")
       tracks.each do |track|
-        current_user.tracks.find_or_create_by(
-          :soundcloud_track_id => track.id
-        )
+        track = Track.find_or_create_by(:soundcloud_track_id => track.id)
+        current_user.favorites.find_or_create_by(:track_id => track.id)
       end
     end
     redirect_to you_path
