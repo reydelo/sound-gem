@@ -1,8 +1,10 @@
+<header>
 <nav class="navbar navbar-default">
   <div class="navbar-header">
     <a class="navbar-brand">SoundGem</a>
   </div>
   <ul class="nav navbar-nav navbar-right">
+    <li><%= image_tag(@me.avatar_url, :class => "avatar, icon") %></li>
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <%= @me.username %> <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
@@ -10,28 +12,24 @@
         <li> <%= link_to "Logout", soundcloud_disconnect_path, :class => "disconnect" %> </li>
       </ul>
     </li>
-    <li><%= image_tag(@me.avatar_url, :class => "avatar") %></li>
   </ul>
 </nav>
+</header>
 
 <div class="row">
   <div class="col-md-4">
-      <div class="page-header">
-        <div class="pull-right">
-          <%= current_user.friends.count %>
-        </div>
-          <h3>Your Friends</h3></div>
+    <header>
+      <h3>Friends (<%= current_user.friends.count %>)</h3>
+    </header>
       <div class="friends">
-        <% current_user.friends.take(16).each do |friend| %>
+        <% current_user.friends.each do |friend| %>
         <%= image_tag(@friend.get("/users/#{friend.soundcloud_user_id}").avatar_url, :class => "avatar") %> <% friend.soundcloud_username %>
         <% end %>
       </div>
 
-      <div class="page-header">
-        <div class="pull-right">
-          <%= current_user.favorites.count %>
-        </div>
-          <h3>Your Favorites</h3></div>
+      <header>
+        <h3>Favorites (<%= current_user.favorites.count %>)</h3>
+      </header>
       <div class="favorites">
         <% current_user.tracks.take(5).each do |track| %>
           Also Liked by:
@@ -41,7 +39,7 @@
         <% end %>
         <% end %>
         <iframe id="soundcloud_widget"
-      src="http://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/<%=track.soundcloud_track_id%>&color=d10640&show_artwork=true&liking=true&sharing=true&auto_play=false"
+      src="http://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/<%=track.soundcloud_track_id%>&color=8C304A&show_artwork=true&liking=true&sharing=true&auto_play=false"
       width="450"
       height="100"
       frameborder="no"></iframe>
@@ -49,7 +47,10 @@
       </div>
 
   </div>
-  <div class="friends col-md-8">
+  <section>
+    <header>
+      <h1>Stream</h1>
+    </header>
     <% @stream.take(10).each do |track| %>
     <div class="pull-left">
       Liked by:
@@ -60,10 +61,10 @@
       <% end %>
     </div>
       <iframe id="soundcloud_widget"
-    src="http://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/<%=track.soundcloud_track_id%>&color=d10640&show_artwork=true&liking=true&sharing=true&auto_play=false"
+    src="http://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/<%=track.soundcloud_track_id%>&color=8C304A&show_artwork=true&liking=true&sharing=true&auto_play=false"
     width="900"
-    height="150"
+    height="125"
     frameborder="no"></iframe>
     <% end %>
-  </div>
+  </section>
 </div>
