@@ -1,3 +1,5 @@
+<!-- <% @stream.take_while{ |track| track.users.where(current_user.friendships.include?(:id)).count > 1}.each do |track| %> -->
+
 GARREN
 alaya.
 Superpoze

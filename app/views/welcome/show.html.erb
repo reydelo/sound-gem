@@ -1,19 +1,19 @@
 <header>
-<nav class="navbar navbar-default">
-  <div class="navbar-header">
-    <a class="navbar-brand">SoundGem</a>
-  </div>
-  <ul class="nav navbar-nav navbar-right">
-    <li><%= image_tag(@me.avatar_url, :class => "avatar, icon") %></li>
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <%= @me.username %> <span class="caret"></span></a>
-      <ul class="dropdown-menu" role="menu">
-        <li class="divider"></li>
-        <li> <%= link_to "Logout", soundcloud_disconnect_path, :class => "disconnect" %> </li>
-      </ul>
-    </li>
-  </ul>
-</nav>
+  <nav class="navbar navbar-default">
+    <div class="navbar-header">
+      <a class="navbar-brand">SoundGem</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><%= image_tag(@me.avatar_url, :class => "avatar, icon") %></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <%= @me.username %> <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+          <li class="divider"></li>
+          <li> <%= link_to "Logout", soundcloud_disconnect_path, :class => "disconnect" %> </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
 </header>
 
 <div class="row">
@@ -21,52 +21,53 @@
     <header>
       <h3>Friends (<%= current_user.friends.count %>)</h3>
     </header>
-      <div class="friends">
-        <% current_user.friends.take(25).each do |friend| %>
-        <%= image_tag(@friend.get("/users/#{friend.soundcloud_user_id}").avatar_url, :class => "avatar") %> <% friend.soundcloud_username %>
-        <% end %>
-      </div>
+    <div class="friends">
+      <% current_user.friends.take(25).each do |friend| %>
+      <%= image_tag(@friend.get("/users/#{friend.soundcloud_user_id}").avatar_url, :class => "avatar") %> <% friend.soundcloud_username %>
+      <% end %>
+    </div>
 
-      <header>
-        <h3>Favorites (<%= current_user.favorites.count %>)</h3>
-      </header>
-      <div class="favorites">
-        <% current_user.tracks.shuffle[0..4].each do |track| %>
-        <b>
+    <header>
+      <h3>Favorites (<%= current_user.favorites.count %>)</h3>
+    </header>
+    <div class="favorites">
+      <% current_user.tracks.shuffle[0..9].each do |track| %>
+      <b>
         <% track.users.where(current_user.friendships.include?(:id)).each do |user| %>
         <% unless user.id == current_user.id %>
-          <span class="glyphicon glyphicon-heart"><%= user.soundcloud_username %></span>
-          <% end %>
+
+        <span class="glyphicon glyphicon-heart"><%= user.soundcloud_username %></span>
+        <% end %>
         <% end %>
       </b>
-        <iframe id="soundcloud_widget"
+      <iframe id="soundcloud_widget"
       src="http://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/<%=track.soundcloud_track_id%>&color=8C304A&show_artwork=true&liking=true&sharing=true&auto_play=false"
       width="450"
       height="100"
       frameborder="no"></iframe>
-        <% end %>
-      </div>
+      <% end %>
+    </div>
 
   </div>
   <div class="col-md-8">
-  <section>
-    <header>
-      <h1>Stream</h1>
-    </header>
-    <% @stream.shuffle[0..9].each do |track| %>
-    <div class="pull-left">
-      <b>
-      <% track.users.where(current_user.friendships.include?(:id)).each do |user| %>
-        <span class="glyphicon glyphicon-heart"> <%= user.soundcloud_username %> </span>
-      <% end %>
-    </b>
-    </div>
+    <section>
+      <header>
+        <h1>Stream</h1>
+      </header>
+      <% @popular.shuffle[0..9].each do |track| %>
+      <div class="pull-left">
+        <b>
+          <% track.users.where(current_user.friendships.include?(:id)).each do |user| %>
+          <span class="glyphicon glyphicon-heart"> <%= user.soundcloud_username %> </span>
+          <% end %>
+        </b>
+      </div>
       <iframe id="soundcloud_widget"
-    src="http://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/<%=track.soundcloud_track_id%>&color=8C304A&show_artwork=true&liking=true&sharing=true&auto_play=false"
-    width="900"
-    height="125"
-    frameborder="no"></iframe>
-    <% end %>
-  </section>
-</div>
+      src="http://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/<%=track.soundcloud_track_id%>&color=8C304A&show_artwork=true&liking=true&sharing=true&auto_play=false"
+      width="900"
+      height="125"
+      frameborder="no"></iframe>
+      <% end %>
+    </section>
+  </div>
 </div>
