@@ -15,9 +15,20 @@
 </nav>
 
 <div class="row">
-  <div class="col-md-1"></div>
+  <div class="col-md-4">
+      <div class="page-header">
+        <div class="pull-right">
+          <%= current_user.friends.count %>
+        </div>
+          <h3>Your Friends</h3></div>
+      <div class="friends">
+        <% current_user.friends.take(16).each do |friend| %>
+        <%= image_tag(@friend.get("/users/#{friend.soundcloud_user_id}").avatar_url, :class => "avatar") %> <% friend.soundcloud_username %>
+        <% end %>
+      </div>
+  </div>
   <div class="friends col-md-8">
-    <% @stream.take(50).each do |track| %>
+    <% @stream.take(10).each do |track| %>
     <div class="pull-right">
       <% track.users.each do |user| %>
       <% if current_user.friends.include?(user) %>
@@ -31,15 +42,5 @@
     height="150"
     frameborder="no"></iframe>
     <% end %>
-  </div>
-  <div class="col-md-3">
-      <div class="header">
-        <p> <%= current_user.friends.count %> Friends </p>
-      </div>
-      <ul>
-        <% current_user.friends.each do |friend| %>
-        <li> <%= image_tag current_user.soundcloud_client.get("/users/#{friend.soundcloud_user_id}").avatar_url %> <%= friend.soundcloud_username %> </li>
-        <% end %>
-      </ul>
   </div>
 </div>

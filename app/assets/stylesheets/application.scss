@@ -1,2 +1,17 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+body {
+  font-family: "Lucida Grande";
+  color: #D10640;
+}
+img.avatar {
+  border-radius: 50%;
+}
+
+.page-header {
+  color: #D10640;
+}
+
+h3 {
+  font-family: "Lucida Grande";
+}
