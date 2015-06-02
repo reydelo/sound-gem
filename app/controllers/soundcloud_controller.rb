@@ -12,19 +12,23 @@ class SoundcloudController < ApplicationController
         :soundcloud_user_id  => me.id,
         :soundcloud_username => me.username
       })
+
+
+
       current_user.update_attributes!({
         :soundcloud_access_token  => soundcloud_client.access_token,
         :soundcloud_refresh_token => soundcloud_client.refresh_token,
         :soundcloud_expires_at    => soundcloud_client.expires_at,
       })
-      peeps = current_user.soundcloud_client.get("/me/followings")
+      limit = me.followings_count
+      peeps = current_user.soundcloud_client.get("/me/followings", :limit => limit)
       peeps.each do |peep|
         user = User.find_or_create_by(
         :soundcloud_user_id => peep.id,
         :soundcloud_username => peep.username
         )
         current_user.friendships.find_or_create_by(:friend_id => user.id)
-        peep_tracks = current_user.soundcloud_client.get("/users/#{peep.id}/favorites")
+        peep_tracks = current_user.soundcloud_client.get("/users/#{peep.id}/favorites", :limit => 1000)
         peep_tracks.each do |peep_track|
           track = Track.find_or_create_by(:soundcloud_track_id => peep_track.id)
           user.favorites.find_or_create_by(:track_id => track.id)

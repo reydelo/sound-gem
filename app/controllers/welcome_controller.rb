@@ -12,9 +12,6 @@ class WelcomeController < ApplicationController
         @stream << track
       end
     end.flatten.uniq
-    current_user.tracks.map do |track|
-      @stream << track
-    end.flatten.uniq
     peeps = current_user.friends
   end
 
