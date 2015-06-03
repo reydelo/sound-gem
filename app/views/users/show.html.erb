@@ -1,4 +1,4 @@
-<!-- current_user stream show page -->
+<!-- specific user favorite show page -->
 <header>
   <nav class="navbar navbar-default">
     <div class="navbar-header">
@@ -18,38 +18,52 @@
 </header>
 
 <div class="row">
+
   <div class="col-md-4">
+    <div class="info">
+      <%= image_tag(@user.avatar_url, class: "userAvatar") %>
+      <h3> <%= @user.soundcloud_username %> </h3>
+      <% if @sc_user.country.blank? || @sc_user.city.blank? %>
+      <h4> <%= @sc_user.city %> <%= @sc_user.country %> </h4>
+      <% else %>
+      <h4> <%= @sc_user.city %>, <%= @sc_user.country %> </h4>
+      <% end %>
+      <h4> <%= @sc_user.followers_count %> Followers </h4>
+      <p> <%= @sc_user.description %> </p>
+
+    </div>
+
     <header>
-      <h3> Friends (<%= current_user.friends.count %>) </h3>
+      <h3> Checkout Your other Friend's Gems </h3>
     </header>
     <div class="friends">
       <% current_user.friends.each do |friend| %>
+      <% unless friend.id == @user.id %>
       <%= link_to (image_tag(friend.avatar_url, class: "avatar")), user_path(friend) %> <% friend.soundcloud_username %>
       <% end %>
+      <% end %>
     </div>
-
   </div>
+
   <div class="col-md-8">
-    <section>
-      <header>
-        <h1>Stream</h1>
-      </header>
-      <% @popular.shuffle[0..9].each do |track| %>
-      <div class="pull-left">
-        <b>
-          <% track.users.each do |user| %>
-          <% if current_user.friends.include?(user) %>
-          <span class="glyphicon glyphicon-heart"> <%= user.soundcloud_username %> </span>
-          <% end %>
-          <% end %>
-        </b>
-      </div>
+    <header>
+      <h3> <%= @user.soundcloud_username %>'s Favorite Tracks</h3>
+    </header>
+    <div class="favorites">
+      <% @user.tracks.shuffle[0..9].each do |track| %>
+      <b>
+        <% track.users.each do |user| %>
+        <% if current_user.friends.include?(user) && user.id != @user.id %>
+        <span class="glyphicon glyphicon-heart"><%= user.soundcloud_username %></span>
+        <% end %>
+        <% end %>
+      </b>
       <iframe id="soundcloud_widget"
       src="http://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/<%=track.soundcloud_track_id%>&color=8C304A&show_artwork=true&liking=true&sharing=true&auto_play=false"
       width="900"
       height="125"
       frameborder="no"></iframe>
       <% end %>
-    </section>
+    </div>
   </div>
 </div>

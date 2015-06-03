@@ -1,0 +1,37 @@
+<header>
+  <nav class="navbar navbar-default">
+    <div class="navbar-header">
+      <a class="navbar-brand">SoundGem</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li> <%= image_tag(current_user.avatar_url, class: "avatar, icon") %> </li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <%= current_user.soundcloud_username %> <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+          <li class="divider"></li>
+          <li> <%= link_to "Logout", soundcloud_disconnect_path, :class => "disconnect" %> </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<header>
+  <h3> <%= @user.soundcloud_username %>'s Favorite Tracks</h3>
+</header>
+<div class="favorites">
+  <% @user.tracks.shuffle[0..9].each do |track| %>
+  <b>
+    <% track.users.each do |user| %>
+    <% if current_user.friends.include?(user) && user.id != @user.id %>
+    <span class="glyphicon glyphicon-heart"><%= user.soundcloud_username %></span>
+    <% end %>
+    <% end %>
+  </b>
+  <iframe id="soundcloud_widget"
+  src="http://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/<%=track.soundcloud_track_id%>&color=8C304A&show_artwork=true&liking=true&sharing=true&auto_play=false"
+  width="450"
+  height="100"
+  frameborder="no"></iframe>
+  <% end %>
+</div>
