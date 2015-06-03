@@ -28,13 +28,14 @@ class SoundcloudController < ApplicationController
         :soundcloud_username => peep.username
         )
         current_user.friendships.find_or_create_by(:friend_id => user.id)
-        peep_tracks = current_user.soundcloud_client.get("/users/#{peep.id}/favorites", :limit => 1000)
+        peep_tracks = current_user.soundcloud_client.get("/users/#{peep.id}/favorites", :limit => 100)
         peep_tracks.each do |peep_track|
           track = Track.find_or_create_by(:soundcloud_track_id => peep_track.id)
           user.favorites.find_or_create_by(:track_id => track.id)
         end
       end
-      tracks = current_user.soundcloud_client.get("/me/favorites")
+      limit = me.public_favorites_count
+      tracks = current_user.soundcloud_client.get("/me/favorites", :limit => limit)
       tracks.each do |track|
         track = Track.find_or_create_by(:soundcloud_track_id => track.id)
         current_user.favorites.find_or_create_by(:track_id => track.id)

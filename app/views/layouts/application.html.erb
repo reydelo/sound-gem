@@ -6,21 +6,21 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <script src="http://w.soundcloud.com/player/api.js"></script>
-  <script>
-   $(document).ready(function() {
-     var widget = SC.Widget(document.getElementById('soundcloud_widget'));
-     widget.bind(SC.Widget.Events.READY, function() {
-       console.log('Ready...');
-     });
-     $('button').click(function() {
-       widget.toggle();
-     });
-   });
-  </script>
 </head>
 <body>
 
 <%= yield %>
+<script>
+ $(document).ready(function() {
+   var widget = SC.Widget(document.getElementById('soundcloud_widget'));
+   widget.bind(SC.Widget.Events.READY, function() {
+     console.log('Ready...');
+   });
+   $('button').click(function() {
+     widget.toggle();
+   });
+ });
+</script>
 
 </body>
 </html>
