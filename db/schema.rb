@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150529180027) do
+ActiveRecord::Schema.define(version: 20150603182002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20150529180027) do
     t.string   "soundcloud_access_token"
     t.string   "soundcloud_refresh_token"
     t.datetime "soundcloud_expires_at"
+    t.string   "avatar_url"
   end
 
 end
