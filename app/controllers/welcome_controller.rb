@@ -12,8 +12,7 @@ class WelcomeController < ApplicationController
         @stream << track
       end
     end.flatten.uniq
-    @popular = @stream.select {|track| track.users.count > 4}
-    peeps = current_user.friends
+    @popular = @stream.select {|track| track.users.count > 4}.uniq
   end
 
 end
