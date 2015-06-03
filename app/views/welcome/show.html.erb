@@ -33,9 +33,8 @@
     <div class="favorites">
       <% current_user.tracks.shuffle[0..9].each do |track| %>
       <b>
-        <% track.users.where(current_user.friendships.include?(:id)).each do |user| %>
-        <% unless user.id == current_user.id %>
-
+        <% track.users.each do |user| %>
+        <% if current_user.friends.include?(user) %>
         <span class="glyphicon glyphicon-heart"><%= user.soundcloud_username %></span>
         <% end %>
         <% end %>
@@ -57,8 +56,10 @@
       <% @popular.shuffle[0..9].each do |track| %>
       <div class="pull-left">
         <b>
-          <% track.users.where(current_user.friendships.include?(:id)).each do |user| %>
+          <% track.users.each do |user| %>
+          <% if current_user.friends.include?(user) %>
           <span class="glyphicon glyphicon-heart"> <%= user.soundcloud_username %> </span>
+          <% end %>
           <% end %>
         </b>
       </div>
