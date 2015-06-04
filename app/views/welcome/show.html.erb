@@ -39,7 +39,7 @@
         <b>
           <% track.users.each do |user| %>
           <% if current_user.friends.include?(user) %>
-          <span class="glyphicon glyphicon-heart"> <%= user.soundcloud_username %> </span>
+          <span class="glyphicon glyphicon-heart"> <%= link_to user.soundcloud_username, user_path(user) %> </span>
           <% end %>
           <% end %>
         </b>
