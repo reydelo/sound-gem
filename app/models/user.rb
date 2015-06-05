@@ -32,4 +32,16 @@ class User < ActiveRecord::Base
     client
   end
 
+  def popular
+    @me = soundcloud_client.get("/me")
+    current_user = User.find_by(soundcloud_user_id: @me.id)
+    @stream = []
+    current_user.friends.map do |friend|
+      friend.tracks.each do |track|
+        @stream << track
+      end
+    end.flatten.uniq
+    @stream.select {|track| track.users.count > 4}.uniq
+  end
+
 end

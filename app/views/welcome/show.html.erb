@@ -16,7 +16,7 @@
       <header>
         <h1>Stream</h1>
       </header>
-      <% @popular.shuffle[0..9].each do |track| %>
+      <% current_user.popular.shuffle[0..9].each do |track| %>
       <div class="pull-left">
         <b>
           <% track.users.each do |user| %>
