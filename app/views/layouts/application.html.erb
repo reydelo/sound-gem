@@ -8,6 +8,28 @@
   <script src="http://w.soundcloud.com/player/api.js"></script>
 </head>
 <body>
+  <header>
+    <nav class="navbar navbar-default">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">SoundGem</a>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <% if current_user %>
+        <li> <%= link_to "Gem Stream", you_path %> </li>
+        <li> <%= link_to (image_tag(current_user.avatar_url, class: "avatar, icon")), user_path(current_user) %> </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <%= current_user.soundcloud_username %> <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li class="divider"></li>
+            <li> <%= link_to "Logout", soundcloud_disconnect_path, :class => "disconnect" %> </li>
+          </ul>
+        </li>
+        <% else %>
+        <li> <%= link_to "Connect With SoundCloud", soundcloud_connect_path, :class => "connect" %> </li>
+        <% end %>
+      </ul>
+    </nav>
+  </header>
   <%= yield %>
   <script>
   $(document).ready(function() {
