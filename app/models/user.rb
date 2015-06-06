@@ -33,15 +33,26 @@ class User < ActiveRecord::Base
   end
 
   def popular
-    @me = soundcloud_client.get("/me")
-    current_user = User.find_by(soundcloud_user_id: @me.id)
-    @stream = []
-    current_user.friends.map do |friend|
-      friend.tracks.each do |track|
-        @stream << track
-      end
-    end.flatten.uniq
-    @stream.select {|track| track.users.count > 4}.uniq
+    query = <<EOF
+    SELECT tracks.*, COUNT(users.id) as num_favs FROM users
+
+      INNER JOIN friendships
+      ON friendships.friend_id = users.id
+
+      INNER JOIN favorites
+      ON users.id = favorites.user_id
+
+      INNER JOIN tracks
+      ON favorites.track_id = tracks.id
+
+      WHERE friendships.user_id = :user_id
+
+      GROUP BY tracks.id
+      ORDER BY num_favs DESC
+EOF
+    @stream = Track.find_by_sql([query,
+      user_id: self.id,
+    ])
   end
 
 end
