@@ -1,13 +1,13 @@
 class UserCleanupWorker
   include Sidekiq::Worker
 
-  def perform(user_id)
-    sc_user = User.find_by(soundcloud_user_id: user_id)
-    me = soundcloud_client.get("/me")
+  def perform(sc_api)
+    me = sc_api
+    sc_user = User.find_by(soundcloud_user_id: me['id'])
     # do lots of user cleanup stuff here
 
     # find/create the sc_user's favorite tracks
-    limit = me.public_favorites_count
+    limit = me['public_favorites_count']
     tracks = sc_user.soundcloud_client.get("/me/favorites", :limit => limit)
     tracks.each do |track|
       track = Track.find_or_create_by(:soundcloud_track_id => track.id)
@@ -15,7 +15,7 @@ class UserCleanupWorker
     end
 
     # find/create the sc_user's followings as friends
-    limit = me.followings_count
+    limit = me['followings_count']
     peeps = sc_user.soundcloud_client.get("/me/followings", :limit => limit)
     peeps.each do |peep|
       user = User.find_or_create_by(soundcloud_user_id: peep.id)
@@ -38,11 +38,5 @@ class UserCleanupWorker
 
     end
 
-    private
-
-    def soundcloud_client
-      return @soundcloud_client if @soundcloud_client
-      @soundcloud_client = User.soundcloud_client(:redirect_uri  => soundcloud_connected_url)
-    end
 
   end

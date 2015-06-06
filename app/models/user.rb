@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   has_many :favorites, dependent: :destroy
   has_many :tracks, through: :favorites
 
+  validates_uniqueness_of :soundcloud_user_id
+
   def self.soundcloud_client(options={})
     options = {
       :client_id     => ENV['SOUNDCLOUD_CLIENT_ID'],
