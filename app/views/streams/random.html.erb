@@ -14,9 +14,12 @@
       <% current_user.popular.sample(20).each do |track| %>
       <div class="pull-left">
         <b>
+          <%= time_ago_in_words(track.created_at) %>
           <% track.users.each do |user| %>
           <% if current_user.friends.include?(user) %>
           <span class="glyphicon glyphicon-heart"> <%= link_to user.soundcloud_username, user_path(user) %> </span>
+          <% elsif user.id == current_user.id %>
+          <span class="glyphicon glyphicon-heart"> <%= link_to 'You', user_path(user) %> </span>
           <% end %>
           <% end %>
         </b>
