@@ -10,10 +10,11 @@
     </div>
   </div>
   <div class="col-md-8">
-    <!-- <section class="recent">
-      <% current_user.popular.take(20).each do |track| %>
+    <section class="recent">
+      <% current_user.recent.take(20).each do |track| %>
       <div class="pull-left">
         <b>
+          <%= time_ago_in_words(track.created_at) %>
           <% track.users.each do |user| %>
           <% if current_user.friends.include?(user) %>
           <span class="glyphicon glyphicon-heart"> <%= link_to user.soundcloud_username, user_path(user) %> </span>
@@ -27,6 +28,6 @@
       height="125"
       frameborder="no"></iframe>
       <% end %>
-    </section> -->
+    </section>
   </div>
 </div>

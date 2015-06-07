@@ -57,4 +57,28 @@ EOF
     ])
   end
 
+  def recent
+    query = <<EOF
+    SELECT tracks.*, COUNT(users.id) as num_favs FROM users
+
+      INNER JOIN friendships
+      ON friendships.friend_id = users.id
+
+      INNER JOIN favorites
+      ON users.id = favorites.user_id
+
+      INNER JOIN tracks
+      ON favorites.track_id = tracks.id
+
+      WHERE friendships.user_id = :user_id
+
+      GROUP BY tracks.id
+      ORDER BY created_at DESC
+EOF
+    @stream = Track.find_by_sql([query,
+      user_id: self.id,
+    ])
+  end
+
+
 end

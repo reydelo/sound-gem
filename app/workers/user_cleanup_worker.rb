@@ -8,9 +8,12 @@ class UserCleanupWorker
 
     # find/create the sc_user's favorite tracks
     limit = me['public_favorites_count']
-    tracks = sc_user.soundcloud_client.get("/me/favorites", :limit => limit)
-    tracks.each do |track|
-      track = Track.find_or_create_by(:soundcloud_track_id => track.id)
+    user_tracks = sc_user.soundcloud_client.get("/me/favorites", :limit => limit)
+    user_tracks.each do |user_track|
+      track = Track.find_or_create_by(:soundcloud_track_id => user_track.id)
+      track.update_attributes!({
+        created_at: user_track.created_at
+        })
       sc_user.favorites.find_or_create_by(:track_id => track.id)
     end
 
@@ -31,6 +34,9 @@ class UserCleanupWorker
           peep_tracks = sc_user.soundcloud_client.get("/users/#{peep.id}/favorites", :limit => limit)
           peep_tracks.each do |peep_track|
             track = Track.find_or_create_by(:soundcloud_track_id => peep_track.id)
+            track.update_attributes!({
+              created_at: peep_track.created_at
+              })
             user.favorites.find_or_create_by(:track_id => track.id)
           end
         end
