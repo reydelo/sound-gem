@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-md-4">
+    <header>
+      <h3> Friends (<%= current_user.friends.count %>) </h3>
+    </header>
+    <div class="friends">
+      <% current_user.friends.each do |friend| %>
+      <%= link_to (image_tag(friend.avatar_url, class: "avatar")), user_path(friend) %> <% friend.soundcloud_username %>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <section class="random">
+      <% current_user.popular.sample(20).each do |track| %>
+      <div class="pull-left">
+        <b>
+          <% track.users.each do |user| %>
+          <% if current_user.friends.include?(user) %>
+          <span class="glyphicon glyphicon-heart"> <%= link_to user.soundcloud_username, user_path(user) %> </span>
+          <% end %>
+          <% end %>
+        </b>
+      </div>
+      <iframe id="soundcloud_widget"
+      src="http://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/<%=track.soundcloud_track_id%>&color=8C304A&show_artwork=true&liking=true&sharing=true&auto_play=false"
+      width="900"
+      height="125"
+      frameborder="no"></iframe>
+      <% end %>
+    </section>
+  </div>
+</div>
