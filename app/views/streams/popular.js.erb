@@ -1,0 +1,7 @@
+$('.popular').append('<%= j render @tracks %>');
+<% if @tracks.next_page %>
+  $('.pagination').replaceWith('<%= j will_paginate @tracks %>');
+<% else %>
+  $(window).off('scroll');
+  $('.pagination').remove();
+<% end %>
