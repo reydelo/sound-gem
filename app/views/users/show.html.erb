@@ -15,16 +15,6 @@
 
     </div>
 
-    <header>
-      <h3> Checkout Your other Friend's Gems </h3>
-    </header>
-    <div class="friends">
-      <% current_user.friends.each do |friend| %>
-      <% unless friend.id == @user.id %>
-      <%= link_to (image_tag(friend.avatar_url, class: "avatar")), user_path(friend) %> <% friend.soundcloud_username %>
-      <% end %>
-      <% end %>
-    </div>
   </div>
 
   <div class="col-md-8">
