@@ -13,5 +13,22 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require jquery_ujs
+//= require vegas
 //= require turbolinks
 //= require_tree .
+
+function backdrop() {
+
+$('body').vegas({
+  overlay: true,
+  transition: 'fade',
+  transitionDuration: 4000,
+  delay: 10000,
+  animation: 'random',
+  animationDuration: 20000,
+  slides: [
+    { src: 'http://musicdolce.com/inst/piano-s.jpg' }
+  ]
+});
+
+}

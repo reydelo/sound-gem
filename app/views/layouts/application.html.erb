@@ -2,12 +2,17 @@
 <html>
 <head>
   <title>SoundGem</title>
+  <% if controller_name == "welcome" %>
+  <%= stylesheet_link_tag    'vegas', media: 'all', 'data-turbolinks-track' => true %>
+  <% else %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <% end %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <script src="http://w.soundcloud.com/player/api.js"></script>
 </head>
 <body>
+  <% unless controller_name =="welcome" %>
   <header>
     <nav class="navbar navbar-default">
       <div class="navbar-header">
@@ -26,12 +31,11 @@
             <li> <%= link_to "Logout", soundcloud_disconnect_path, :class => "disconnect" %> </li>
           </ul>
         </li>
-        <% else %>
-        <li> <%= link_to "Connect With SoundCloud", soundcloud_connect_path, :class => "connect" %> </li>
         <% end %>
       </ul>
     </nav>
   </header>
+  <% end %>
   <%= yield %>
   <script>
   $(document).ready(function() {

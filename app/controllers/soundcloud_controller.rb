@@ -19,7 +19,7 @@ class SoundcloudController < ApplicationController
         })
         UserCleanupWorker.perform_async(me)
       end
-      redirect_to root_path
+      redirect_to popular_path
     end
 
     def disconnect
