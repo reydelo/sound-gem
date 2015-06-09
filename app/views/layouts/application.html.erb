@@ -13,28 +13,24 @@
 </head>
 <body>
   <% unless controller_name =="welcome" %>
-  <header>
     <nav class="navbar navbar-default">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="/">SoundGem</a>
-      </div>
+      <a class="navbar-brand" href="/">SoundGem</a>
       <ul class="nav navbar-nav navbar-right">
         <% if current_user %>
-        <li id="popular"> <%= link_to "Popular Gems", popular_path %> </li>
-        <li id="recent"> <%= link_to "Random Gems", random_path %> </li>
-        <li id="random"> <%= link_to "Recent Gems", recent_path %> </li>
-        <li> <%= link_to (image_tag(current_user.avatar_url, class: "avatar, icon")), user_path(current_user) %> </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <%= current_user.soundcloud_username %> <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%= current_user.soundcloud_username %><span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
+            <li id="popular"> <%= link_to "Popular Gems", popular_path %> </li>
+            <li id="recent"> <%= link_to "Random Gems", random_path %> </li>
+            <li id="random"> <%= link_to "Recent Gems", recent_path %> </li>
             <li class="divider"></li>
             <li> <%= link_to "Logout", soundcloud_disconnect_path, :class => "disconnect" %> </li>
           </ul>
         </li>
+        <li><%= link_to (image_tag(current_user.avatar_url, class: "icon")), user_path(current_user) %></li>
         <% end %>
       </ul>
     </nav>
-  </header>
   <% end %>
   <%= yield %>
   <script>

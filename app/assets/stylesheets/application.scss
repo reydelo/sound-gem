@@ -1,47 +1,143 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
 body {
-  font-family: "Lucida Grande";
+  font-family: Raleway;
   color: #8C304A;
   background-color: #F5F5F5;
 }
+
 // navbar
 .navbar-default {
     background-color: #848484;
+    font-family: Raleway;
     height: 50px;
+    position: relative;
 }
+
 .navbar-default .navbar-brand {
-    color: #8C304A;
-}
-.navbar-default .navbar-nav > li > a {
+  font-family: Raleway;
+  font-size: 30px;
   color: #8C304A;
 }
-img.icon {
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
+
+ul.nav.navbar-nav.navbar-right {
+  position: relative;
 }
 
-// friend icons
-img.avatar {
-  border-radius: 50%;
-  height: 75px;
-  width: 75px;
+.navbar-default .navbar-nav > li > a {
+  padding: 0px 10px;
+  float: right;
 }
 
+.navbar-default .navbar-nav > li > a.dropdown-toggle {
+  font-size: 18px;
+  font-family: Raleway;
+  color: #8C304A;
+  padding-top: 12px;
+  float: right;
+}
+
+.icon {
+  height: 47px;
+  width: 47px;
+  padding: 0;
+  display: block;
+  float: right;
+}
+
+//avatars
 img.userAvatar {
   height: 125px;
   width: 125px;
 }
 
+img.avatar {
+  height: 125px;
+  width: 125px;
+}
+
+//user index
+ul.img-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+ul.img-list li {
+  display: inline-block;
+  height: 125px;
+  margin: 0 1em 1em 0;
+  position: relative;
+  width: 125px;
+}
+span.text-content {
+  background: rgba(0,0,0,0.5);
+  color: white;
+  cursor: pointer;
+  display: table;
+  height: 125px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 125px;
+  opacity: 0;
+  -webkit-transition: opacity 500ms;
+  -moz-transition: opacity 500ms;
+  -o-transition: opacity 500ms;
+  transition: opacity 500ms;
+}
+
+span.text-content span {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+ul.img-list li:hover span.text-content {
+  opacity: 1;
+}
+
+li span a:link {
+  color: white;
+}
+
+li span a:visited {
+  color: white;
+}
+
+//other page settings
 header {
   text-decoration: underline;
 }
 
 a:link {
-  text-decoration: none;
   color: #8C304A;
 }
 
-#soundcloud_widget {
+a:visited {
+  color: #8C304A;
+}
+
+iframe {
+  width: 100%;
+  height: 125px;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Raleway'), url(http://fonts.gstatic.com/s/raleway/v9/QAUlVt1jXOgQavlW5wEfxQLUuEpTyoUstqEm5AMlJo4.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+/* latin */
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 900;
+  src: local('Raleway Heavy'), local('Raleway-Heavy'), url(http://fonts.gstatic.com/s/raleway/v9/PKCRbVvRfd5n7BTjtGiFZAzyDMXhdD8sAj6OAJTFsBI.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
