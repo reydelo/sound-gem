@@ -1,7 +1,7 @@
 <!-- specific user favorite show page -->
 <div class="row">
 
-  <div class="col-md-3">
+  <div class="col-md-3 sidebar">
     <div class="profile">
       <%= image_tag(@user.avatar_url, class: "userAvatar") %>
     </div>
@@ -24,22 +24,10 @@
     </header>
     <div class="favorites">
       <% @user.tracks.sample(20).each do |track| %>
-      <div class="pull-left">
-        <b>
-          <%= time_ago_in_words(track.created_at) %>
-          <% track.users.each do |user| %>
-          <% if current_user.friends.include?(user) && user.id != @user.id %>
-          <span class="glyphicon glyphicon-heart"><%= link_to user.soundcloud_username, user_path(user) %></span>
-          <% elsif user.id == current_user.id && user.id != @user.id %>
-          <span class="glyphicon glyphicon-heart"><%= link_to 'You', user_path(user) %></span>
-          <% end %>
-          <% end %>
-        </b>
-      </div>
-      <iframe id="soundcloud_widget"
-      src="http://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/<%=track.soundcloud_track_id%>&color=8C304A&show_artwork=true&liking=true&sharing=true&auto_play=false"
-      frameborder="no"></iframe>
-      <% end %>
+      <section class="stream">
+        <%= render partial: "shared/track", object: track %>
+      </section>
+        <% end %>
     </div>
   </div>
 </div>

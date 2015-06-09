@@ -1,5 +1,5 @@
-<section class="random">
-  <% current_user.popular.sample(20).each do |track| %>
+<% current_user.popular.sample(20).each do |track| %>
+<section class="stream">
   <%= render partial: "shared/track", object: track %>
-  <% end %>
 </section>
+<% end %>
