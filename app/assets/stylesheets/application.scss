@@ -107,6 +107,25 @@ li span a:visited {
   color: white;
 }
 
+//user show page
+.col-md-3 {
+  padding: 0 15px;
+  overflow: hidden;
+}
+.profile {
+  float: left;
+  padding: 0 15px;
+}
+
+.info {
+  padding: 0 15px;
+}
+
+.favorites {
+  overflow-y: scroll;
+  height: 90vh;
+}
+
 //other page settings
 header {
   text-decoration: underline;

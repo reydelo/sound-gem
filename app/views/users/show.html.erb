@@ -1,9 +1,11 @@
 <!-- specific user favorite show page -->
 <div class="row">
 
-  <div class="col-md-4">
-    <div class="info">
+  <div class="col-md-3">
+    <div class="profile">
       <%= image_tag(@user.avatar_url, class: "userAvatar") %>
+    </div>
+    <div class="info">
       <h3> <%= @user.soundcloud_username %> </h3>
       <% if @sc_user.country.blank? || @sc_user.city.blank? %>
       <h4> <%= @sc_user.city %> <%= @sc_user.country %> </h4>
@@ -11,17 +13,16 @@
       <h4> <%= @sc_user.city %>, <%= @sc_user.country %> </h4>
       <% end %>
       <h4> <%= @sc_user.followers_count %> Followers </h4>
-      <p> <%= @sc_user.description %> </p>
-
+      <!-- <p> <%= @sc_user.description %> </p> -->
     </div>
 
   </div>
 
-  <div class="col-md-8">
-    <header>
-      <h3> <%= @user.soundcloud_username %>'s Favorite Tracks</h3>
-    </header>
+  <div class="col-md-9">
     <div class="favorites">
+      <header>
+        <h3> <%= @user.soundcloud_username %>'s Favorite Tracks</h3>
+      </header>
       <% @user.tracks.sample(20).each do |track| %>
       <div class="pull-left">
         <b>
