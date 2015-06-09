@@ -19,10 +19,10 @@
   </div>
 
   <div class="col-md-9">
+    <header>
+      <h3> <%= @user.soundcloud_username %>'s Favorite Tracks</h3>
+    </header>
     <div class="favorites">
-      <header>
-        <h3> <%= @user.soundcloud_username %>'s Favorite Tracks</h3>
-      </header>
       <% @user.tracks.sample(20).each do |track| %>
       <div class="pull-left">
         <b>
