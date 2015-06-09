@@ -5,4 +5,8 @@ class UsersController < ApplicationController
     @sc_user = current_user.soundcloud_client.get("/users/#{@user.soundcloud_user_id}")
   end
 
+  def index
+    @users = current_user.friends.all
+  end
+
 end
