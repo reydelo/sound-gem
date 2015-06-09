@@ -1,19 +1,5 @@
 <section class="popular">
   <% current_user.popular.take(20).each do |track| %>
-  <div class="pull-left">
-    <b>
-      <%= time_ago_in_words(track.created_at) %>
-      <% track.users.each do |user| %>
-      <% if current_user.friends.include?(user) %>
-      <span class="glyphicon glyphicon-heart"> <%= link_to user.soundcloud_username, user_path(user) %> </span>
-      <% elsif user.id == current_user.id %>
-      <span class="glyphicon glyphicon-heart"> <%= link_to 'You', user_path(user) %> </span>
-      <% end %>
-      <% end %>
-    </b>
-  </div>
-  <iframe id="soundcloud_widget"
-  src="http://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/<%=track.soundcloud_track_id%>&color=8C304A&show_artwork=true&liking=true&sharing=true&auto_play=false"
-  frameborder="no"></iframe>
+  <%= render partial: "shared/track", object: track %>
   <% end %>
 </section>
