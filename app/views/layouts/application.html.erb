@@ -44,5 +44,56 @@
     });
   });
   </script>
+
+  <script type='text/javascript'>
+
+var next_widget ;
+var iframes =[];
+var its_the_last = false;
+
+(function() {
+iframes = document.querySelectorAll('iframe');
+//iframe.src = 'http://w.soundcloud.com/player/?url=http://api.soundcloud.com/tracks/43315398&auto_play=true';
+for (var i = 0; i < iframes.length; i++) {
+    //var widget_+i = SC.Widget(iframes[i]);
+    window['widget_'+i] = SC.Widget(iframes[i]);
+    var widget = SC.Widget(iframes[i]);
+
+
+
+    widget.bind(SC.Widget.Events.PLAY, function(eventData) {
+      //var j = this.name;
+     // next_widget = window['widget_'+i];
+     var widget_i = this;
+     for (var i = 0; i < iframes.length; i++) {
+       if(SC.Widget(iframes[i]) === widget_i){
+        if (i+1 >= iframes.length) {
+          its_the_last = true;
+        }else{
+          next_widget = SC.Widget(iframes[i+1]);
+        }
+
+
+       }else{
+
+        console.log('error');
+       }
+     };
+    });
+
+    widget.bind(SC.Widget.Events.FINISH, function(eventData) {
+      if (its_the_last == false) {
+        next_widget.play();
+      }
+
+    });
+
+
+};
+
+}());
+</script>
+
+
 </body>
 </html>
