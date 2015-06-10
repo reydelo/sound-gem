@@ -23,7 +23,7 @@
       <h3> <%= @user.soundcloud_username %>'s Favorite Tracks</h3>
     </header>
     <div class="favorites">
-      <% @user.tracks.sample(20).each do |track| %>
+      <% @user.posts.sample(20).each do |track| %>
       <section class="stream">
         <%= render partial: "shared/track", object: track %>
       </section>
