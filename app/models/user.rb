@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   has_many :friends, through: :friendships
   has_many :favorites, dependent: :destroy
   has_many :tracks, through: :favorites
+  has_many :postings, dependent: :destroy
+  has_many :posts, through: :postings
 
   validates_uniqueness_of :soundcloud_user_id
 

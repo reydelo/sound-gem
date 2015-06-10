@@ -12,10 +12,25 @@ class UserCleanupWorker
     user_tracks.each do |user_track|
       track = Track.find_or_create_by(:soundcloud_track_id => user_track.id)
       track.update_attributes!({
-        created_at: user_track.created_at
+        created_at: user_track.created_at,
+        artist_id: user_track.user_id
         })
       sc_user.favorites.find_or_create_by(:track_id => track.id)
     end
+
+    # find/create the sc_user's posted tracks
+    post_count = me['track_count']
+    if post_count != 0
+      user_posts = sc_user.soundcloud_client.get('/me/tracks', :limit => post_count)
+        user_posts.each do |user_post|
+          track = Track.find_or_create_by(:soundcloud_track_id => user_post.id)
+          track.update_attributes!({
+            created_at: user_post.created_at,
+            artist_id: user_post.user_id
+            })
+          sc_user.postings.find_or_create_by(:post_id => track.id)
+        end
+      end
 
     # find/create the sc_user's followings as friends
     limit = me['followings_count']
@@ -40,6 +55,20 @@ class UserCleanupWorker
             user.favorites.find_or_create_by(:track_id => track.id)
           end
         end
+
+        post_count = peep['track_count']
+        if post_count != 0
+          peep_posts = sc_user.soundcloud_client.get("/users/#{peep.id}/tracks", :limit => post_count)
+            peep_posts.each do |peep_post|
+              track = Track.find_or_create_by(:soundcloud_track_id => peep_post.id)
+              track.update_attributes!({
+                created_at: peep_post.created_at,
+                artist_id: peep_post.user_id
+                })
+              user.postings.find_or_create_by(:post_id => track.id)
+            end
+          end
+
       end
 
     end
