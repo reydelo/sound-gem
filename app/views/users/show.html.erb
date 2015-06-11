@@ -18,16 +18,34 @@
 
   </div>
 
+<% if @user.posts.count != 0 %>
   <div class="col-md-9">
     <header>
-      <h3> <%= @user.soundcloud_username %>'s Favorite Tracks</h3>
+      <h3> <%= @user.soundcloud_username %>'s Sounds</h3>
     </header>
     <div class="favorites">
-      <% @user.posts.sample(20).each do |track| %>
+      <% @user.posts.take(20).each do |track| %>
       <section class="stream">
         <%= render partial: "shared/track", object: track %>
       </section>
         <% end %>
     </div>
   </div>
+
+  <% else %>
+  <div class="col-md-9">
+    <header>
+      <h3> <%= @user.soundcloud_username %>'s Favorite Sounds</h3>
+    </header>
+    <div class="favorites">
+      <% @user.tracks.sample(20).each do |track| %>
+      <section class="stream">
+        <%= render partial: "shared/track", object: track %>
+      </section>
+        <% end %>
+    </div>
+  </div>
+
+  <% end %>
+
 </div>
