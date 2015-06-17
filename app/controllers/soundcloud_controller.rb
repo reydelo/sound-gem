@@ -17,7 +17,6 @@ class SoundcloudController < ApplicationController
         soundcloud_refresh_token: soundcloud_client.refresh_token,
         soundcloud_expires_at: soundcloud_client.expires_at
         })
-        UserCleanupWorker.perform_async(me)
       end
     end
 
