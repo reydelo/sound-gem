@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
     options = {
       :client_id     => ENV['SOUNDCLOUD_CLIENT_ID'],
       :client_secret => ENV['SOUNDCLOUD_CLIENT_SECRET'],
+      :redirect_uri => ENV['SOUNDCLOUD_REDIRECT_URI']
     }.merge(options)
     Soundcloud.new(options)
   end
