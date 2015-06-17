@@ -28,9 +28,17 @@ class SoundcloudController < ApplicationController
 
     private
 
+    def redirect_url
+      if request.ssl?
+        soundcloud_connected_url(:protocol => "https")
+      else
+        soundcloud_connected_url
+      end
+    end
+
     def soundcloud_client
       return @soundcloud_client if @soundcloud_client
-      @soundcloud_client = User.soundcloud_client(:redirect_uri  => soundcloud_connected_url)
+      @soundcloud_client = User.soundcloud_client(:redirect_uri  => redirect_url)
     end
 
   end
