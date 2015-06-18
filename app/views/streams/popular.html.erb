@@ -1,5 +1,24 @@
+<% if current_user.popular.count < 5 %>
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <h1>Welcome to SoundGem</h1>
+    <h3>Your resource for finding those precious gems on Soundcloud </h3>
+    <b></b>
+    <p>SoundGem acts as a filter for your Soundcloud stream. We do this by pulling in every track that was liked by your <%= current_user.soundcloud_client.get('/me').followings_count %> friends.</p>
+    <b></b>
+    <p>We eliminate duplicate posts and underrated tracks from your stream. We'll also exposes you to new music by showing you tracks by artists you may not be follwing yet.</p>
+    <b></b>
+    <p>Your personalized stream can be sorted by popularity among your friends, release date, or simply shuffled. Also check out a friend's profile to listen to their favorite tracks or current posts.</p>
+    <b></b>
+    <p>SoundGem is a work in progress.  Keep checking in for new features.</p>
+    <b></b>
+    <h4>As you've been reading this, we've collected ALOT of data. Wait about 5 more minutes while we pull in tracks, then click the link below!</h4>
+    <button type="button"> <%= link_to "Your New Stream", popular_path %> </button>
+  </div>
+</div>
+<% else %>
 <% current_user.popular.take(20).each do |track| %>
-<section class="stream">
-  <%= render partial: "shared/track", object: track %>
-</section>
+<section class="stream"> <%= render partial: "shared/track", object: track %> </section>
+<% end %>
 <% end %>
